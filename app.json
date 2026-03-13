@@ -19,15 +19,21 @@
     "list": [
       {
         "pagePath": "pages/dashboard/index",
-        "text": "总览"
+        "text": "总览",
+        "iconPath": "assets/tab-dashboard.png",
+        "selectedIconPath": "assets/tab-dashboard-active.png"
       },
       {
         "pagePath": "pages/assets/index",
-        "text": "资产"
+        "text": "资产",
+        "iconPath": "assets/tab-assets.png",
+        "selectedIconPath": "assets/tab-assets-active.png"
       },
       {
         "pagePath": "pages/review/index",
-        "text": "复盘"
+        "text": "复盘",
+        "iconPath": "assets/tab-review.png",
+        "selectedIconPath": "assets/tab-review-active.png"
       }
     ]
   },
