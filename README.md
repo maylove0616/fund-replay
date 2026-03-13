@@ -13,7 +13,8 @@
 - `资产`：支持基金代码查询净值，自动回填基金名称、净值日期，并按份额计算市值
 - `复盘`：新增、编辑、删除复盘记录，可直接引用已持有基金做复盘
 - 支持云开发数据读写；未配置云环境时自动回退到本地 `Storage`
-- 提供 `records` 和 `fundQuote` 两个云函数模板
+- 提供 `auth`、`records` 和 `fundQuote` 三个云函数模板
+- 支持微信登录；登录后每个用户只能看到和修改自己的数据
 
 ## 如何运行
 
@@ -27,10 +28,12 @@
 
 1. 在微信开发者工具中开通云开发
 2. 把 [utils/config.js](/Users/guangmingdeng/Documents/fund-replay/utils/config.js) 里的 `your-cloud-env-id` 改成真实环境 ID
-3. 在云开发控制台创建两个集合：
+3. 在云开发控制台创建三个集合：
+   - `users`
    - `assets`
    - `reviews`
 4. 部署两个云函数目录：
+   - `cloudfunctions/auth`
    - `cloudfunctions/records`
    - `cloudfunctions/fundQuote`
 5. `fundQuote` 默认模板使用公开基金估值接口做代理查询；如果后续换成你自己的接口，只需要改云函数
@@ -44,7 +47,9 @@
 - `pages/assets`：资产记录页
 - `pages/review`：基金复盘页
 - `services`：云开发和基金查询服务层
+- `services/auth.js`：登录态和用户资料服务
 - `utils/store.js`：本地存储与汇总逻辑
+- `cloudfunctions/auth`：登录和用户资料云函数
 - `cloudfunctions/records`：资产/复盘 CRUD 云函数
 - `cloudfunctions/fundQuote`：基金净值查询云函数
 

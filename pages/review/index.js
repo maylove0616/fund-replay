@@ -1,5 +1,6 @@
 const store = require('../../utils/store');
 const repository = require('../../services/repository');
+const auth = require('../../services/auth');
 
 function createForm() {
   return {
@@ -18,11 +19,29 @@ Page({
     trackedFunds: [],
     editingId: '',
     submitLabel: '保存复盘',
-    cloudStatus: repository.getCloudStatus()
+    cloudStatus: repository.getCloudStatus(),
+    loggedIn: false
   },
 
   async onShow() {
-    await this.refreshList();
+    if (!auth.isLoggedIn()) {
+      this.setData({
+        loggedIn: false,
+        reviews: [],
+        trackedFunds: []
+      });
+      return;
+    }
+
+    this.setData({ loggedIn: true });
+    try {
+      await this.refreshList();
+    } catch (error) {
+      wx.showToast({
+        title: error.message || '读取复盘失败',
+        icon: 'none'
+      });
+    }
   },
 
   handleInput(event) {
@@ -33,6 +52,11 @@ Page({
   },
 
   async submitReview() {
+    if (!this.data.loggedIn) {
+      this.goLogin();
+      return;
+    }
+
     const { fundName, date, summary, mistake, nextAction } = this.data.form;
     if (!fundName || !summary || !nextAction) {
       wx.showToast({
@@ -132,6 +156,12 @@ Page({
         code: item.code,
         label: item.code ? `${item.name} · ${item.code}` : item.name
       }))
+    });
+  },
+
+  goLogin() {
+    wx.switchTab({
+      url: '/pages/profile/index'
     });
   }
 });

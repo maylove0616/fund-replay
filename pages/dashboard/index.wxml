@@ -2,14 +2,15 @@
   <view class="hero">
     <view class="hero-title">基金复盘助手</view>
     <view class="hero-subtitle">记录持仓、更新市值、沉淀每次交易和判断背后的复盘结论。</view>
-    <view class="status-bar">
-      <view class="status-pill">{{cloudStatus.enabled ? '云开发已启用' : '本地模式'}}</view>
-      <view class="status-pill" wx:if="{{cloudStatus.message}}">{{cloudStatus.message}}</view>
-    </view>
   </view>
 
   <view class="section">
     <view class="section-title">资产总览</view>
+    <view class="empty" wx:if="{{!loggedIn}}">
+      <view>登录后即可查看你的资产总览和复盘数据。</view>
+      <button class="button" bindtap="goLogin">去登录</button>
+    </view>
+    <block wx:else>
     <view class="grid">
       <view class="card">
         <view class="stat-label">总成本</view>
@@ -43,11 +44,12 @@
         <view class="muted">已复盘基金占比</view>
       </view>
     </view>
+    </block>
   </view>
 
   <view class="section">
     <view class="section-title">基金持仓看板</view>
-    <block wx:if="{{stats.topGroups.length}}">
+    <block wx:if="{{loggedIn && stats.topGroups.length}}">
       <view class="card" wx:for="{{stats.topGroups}}" wx:key="key">
         <view class="row">
           <view class="strong">{{item.name}}</view>
@@ -60,12 +62,12 @@
         </view>
       </view>
     </block>
-    <view class="empty" wx:else>先新增资产记录，这里会自动生成基金持仓看板。</view>
+    <view class="empty" wx:else>{{loggedIn ? '先新增资产记录，这里会自动生成基金持仓看板。' : '登录后显示你的基金持仓看板。'}}</view>
   </view>
 
   <view class="section">
     <view class="section-title">最近资产更新</view>
-    <block wx:if="{{stats.recentAssets.length}}">
+    <block wx:if="{{loggedIn && stats.recentAssets.length}}">
       <view class="card" wx:for="{{stats.recentAssets}}" wx:key="id">
         <view class="row">
           <view class="strong">{{item.name}}</view>
@@ -77,12 +79,12 @@
         </view>
       </view>
     </block>
-    <view class="empty" wx:else>还没有资产记录，先去“资产”页新增一条。</view>
+    <view class="empty" wx:else>{{loggedIn ? '还没有资产记录，先去“资产”页新增一条。' : '登录后显示最近资产更新。'}}</view>
   </view>
 
   <view class="section">
     <view class="section-title">最近一次复盘</view>
-    <block wx:if="{{stats.latestReview}}">
+    <block wx:if="{{loggedIn && stats.latestReview}}">
       <view class="card">
         <view class="row">
           <view class="strong">{{stats.latestReview.fundName}}</view>
@@ -98,6 +100,6 @@
         </view>
       </view>
     </block>
-    <view class="empty" wx:else>还没有复盘记录，先去“复盘”页补第一篇。</view>
+    <view class="empty" wx:else>{{loggedIn ? '还没有复盘记录，先去“复盘”页补第一篇。' : '登录后显示最近一次复盘。'}}</view>
   </view>
 </view>

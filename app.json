@@ -2,7 +2,8 @@
   "pages": [
     "pages/dashboard/index",
     "pages/assets/index",
-    "pages/review/index"
+    "pages/review/index",
+    "pages/profile/index"
   ],
   "window": {
     "navigationBarTitleText": "基金复盘助手",
@@ -34,6 +35,12 @@
         "text": "复盘",
         "iconPath": "assets/tab-review.png",
         "selectedIconPath": "assets/tab-review-active.png"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我的",
+        "iconPath": "assets/tab-profile.png",
+        "selectedIconPath": "assets/tab-profile-active.png"
       }
     ]
   },

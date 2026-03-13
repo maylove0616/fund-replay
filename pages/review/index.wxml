@@ -2,14 +2,15 @@
   <view class="hero">
     <view class="hero-title">基金复盘</view>
     <view class="hero-subtitle">把判断、失误和下一步动作写下来，避免每次都从情绪重新开始。</view>
-    <view class="status-bar">
-      <view class="status-pill">{{cloudStatus.enabled ? '云端复盘库' : '本地复盘库'}}</view>
-    </view>
   </view>
 
   <view class="section">
     <view class="section-title">{{editingId ? '编辑复盘' : '新增复盘'}}</view>
-    <view class="form-card">
+    <view class="empty" wx:if="{{!loggedIn}}">
+      <view>登录后即可查看和记录你自己的基金复盘。</view>
+      <button class="button" bindtap="goLogin">去登录</button>
+    </view>
+    <view class="form-card" wx:else>
       <view class="field" wx:if="{{trackedFunds.length}}">
         <text class="field-label">已持有基金</text>
         <view class="chips">
@@ -45,7 +46,7 @@
 
   <view class="section">
     <view class="section-title">历史复盘</view>
-    <block wx:if="{{reviews.length}}">
+    <block wx:if="{{loggedIn && reviews.length}}">
       <view class="card" wx:for="{{reviews}}" wx:key="id">
         <view class="row">
           <view class="strong">{{item.fundName}}</view>
@@ -70,6 +71,6 @@
         </view>
       </view>
     </block>
-    <view class="empty" wx:else>暂无复盘记录。</view>
+    <view class="empty" wx:else>{{loggedIn ? '暂无复盘记录。' : '登录后显示你的复盘记录。'}}</view>
   </view>
 </view>

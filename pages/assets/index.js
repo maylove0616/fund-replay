@@ -1,6 +1,7 @@
 const store = require('../../utils/store');
 const repository = require('../../services/repository');
 const { fetchFundByCode } = require('../../services/fund');
+const auth = require('../../services/auth');
 
 function createForm() {
   return {
@@ -25,11 +26,29 @@ Page({
     editingId: '',
     submitLabel: '保存资产记录',
     cloudStatus: repository.getCloudStatus(),
-    quoteStatus: ''
+    quoteStatus: '',
+    loggedIn: false
   },
 
   async onShow() {
-    await this.refreshList();
+    if (!auth.isLoggedIn()) {
+      this.setData({
+        loggedIn: false,
+        assets: [],
+        assetGroups: []
+      });
+      return;
+    }
+
+    this.setData({ loggedIn: true });
+    try {
+      await this.refreshList();
+    } catch (error) {
+      wx.showToast({
+        title: error.message || '读取资产失败',
+        icon: 'none'
+      });
+    }
   },
 
   handleInput(event) {
@@ -51,6 +70,11 @@ Page({
   },
 
   async fetchQuote() {
+    if (!this.data.loggedIn) {
+      this.goLogin();
+      return;
+    }
+
     try {
       wx.showLoading({
         title: '查询中'
@@ -85,6 +109,11 @@ Page({
   },
 
   computeMarketValue() {
+    if (!this.data.loggedIn) {
+      this.goLogin();
+      return;
+    }
+
     const { units, nav } = this.data.form;
     if (!units || !nav) {
       wx.showToast({
@@ -101,6 +130,11 @@ Page({
   },
 
   async submitAsset() {
+    if (!this.data.loggedIn) {
+      this.goLogin();
+      return;
+    }
+
     const { name, code, cost, units, marketValue, nav, navDate, date, tags } = this.data.form;
     if (!name || !cost || !marketValue) {
       wx.showToast({
@@ -216,6 +250,11 @@ Page({
       cloudStatus: repository.getCloudStatus(),
       assets: assets.filter(filter),
       assetGroups: assetGroups.filter(filter)
+    });
+  },
+  goLogin() {
+    wx.switchTab({
+      url: '/pages/profile/index'
     });
   }
 });

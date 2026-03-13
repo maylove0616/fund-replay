@@ -2,15 +2,15 @@
   <view class="hero">
     <view class="hero-title">资产记录</view>
     <view class="hero-subtitle">按基金或账户维度更新成本、市值和标签，先把账记清楚。</view>
-    <view class="status-bar">
-      <view class="status-pill">{{cloudStatus.enabled ? '云端同步中' : '本地存储中'}}</view>
-      <view class="status-pill" wx:if="{{cloudStatus.enabled}}">支持净值查询</view>
-    </view>
   </view>
 
   <view class="section">
     <view class="section-title">{{editingId ? '编辑记录' : '新增记录'}}</view>
-    <view class="form-card">
+    <view class="empty" wx:if="{{!loggedIn}}">
+      <view>登录后即可记录和管理你自己的资产数据。</view>
+      <button class="button" bindtap="goLogin">去登录</button>
+    </view>
+    <view class="form-card" wx:else>
       <view class="field">
         <text class="field-label">基金名称</text>
         <input class="input" placeholder-class="input-placeholder" placeholder="例如：中欧医疗健康" data-field="name" value="{{form.name}}" bindinput="handleInput" />
@@ -59,14 +59,14 @@
 
   <view class="section">
     <view class="section-title">筛选与持仓汇总</view>
-    <view class="form-card">
+    <view class="form-card" wx:if="{{loggedIn}}">
       <view class="field" style="margin-bottom: 0;">
         <text class="field-label">搜索</text>
         <input class="input" placeholder-class="input-placeholder" placeholder="按基金名、代码、标签搜索" value="{{keyword}}" bindinput="handleKeywordInput" />
       </view>
     </view>
-    <view class="section-title" style="margin-top: 24rpx;">按基金聚合</view>
-    <block wx:if="{{assetGroups.length}}">
+    <view class="section-title" style="margin-top: 24rpx;" wx:if="{{loggedIn}}">按基金聚合</view>
+    <block wx:if="{{loggedIn && assetGroups.length}}">
       <view class="card" wx:for="{{assetGroups}}" wx:key="key">
         <view class="row">
           <view class="strong">{{item.name}}</view>
@@ -86,12 +86,12 @@
         </view>
       </view>
     </block>
-    <view class="empty" wx:else>暂无匹配的聚合持仓。</view>
+    <view class="empty" wx:else>{{loggedIn ? '暂无匹配的聚合持仓。' : '登录后显示你的聚合持仓。'}}</view>
   </view>
 
   <view class="section">
     <view class="section-title">历史资产</view>
-    <block wx:if="{{assets.length}}">
+    <block wx:if="{{loggedIn && assets.length}}">
       <view class="card" wx:for="{{assets}}" wx:key="id">
         <view class="row">
           <view class="strong">{{item.name}}</view>
@@ -112,6 +112,6 @@
         </view>
       </view>
     </block>
-    <view class="empty" wx:else>暂无匹配的资产记录。</view>
+    <view class="empty" wx:else>{{loggedIn ? '暂无匹配的资产记录。' : '登录后显示你的资产记录。'}}</view>
   </view>
 </view>

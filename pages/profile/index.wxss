@@ -1,0 +1,39 @@
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.avatar-button {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  line-height: 1;
+}
+
+.avatar-button::after {
+  border: none;
+}
+
+.avatar {
+  width: 116rpx;
+  height: 116rpx;
+  border-radius: 50%;
+  background: #efe6d7;
+}
+
+.avatar-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8d755d;
+  font-size: 24rpx;
+}
+
+.profile-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+}
