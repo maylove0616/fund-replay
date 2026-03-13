@@ -1,0 +1,7 @@
+.chips {
+  margin-top: 18rpx;
+}
+
+.card {
+  margin-bottom: 20rpx;
+}

@@ -1,0 +1,12 @@
+.DS_Store
+**/.DS_Store
+
+# WeChat DevTools local settings
+project.private.config.json
+
+# Cloud function dependencies
+cloudfunctions/**/node_modules/
+
+# Common local build outputs
+miniprogram_npm/
+dist/

@@ -1,0 +1,37 @@
+{
+  "pages": [
+    "pages/dashboard/index",
+    "pages/assets/index",
+    "pages/review/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "基金复盘助手",
+    "navigationBarBackgroundColor": "#f5f1e8",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f7f3eb",
+    "backgroundTextStyle": "light"
+  },
+  "tabBar": {
+    "color": "#7e6b57",
+    "selectedColor": "#b65128",
+    "backgroundColor": "#fffaf2",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/dashboard/index",
+        "text": "总览"
+      },
+      {
+        "pagePath": "pages/assets/index",
+        "text": "资产"
+      },
+      {
+        "pagePath": "pages/review/index",
+        "text": "复盘"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "cloud": true
+}

@@ -1,0 +1,27 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="72" y1="56" x2="432" y2="456" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1F5C4E"/>
+      <stop offset="1" stop-color="#14352F"/>
+    </linearGradient>
+    <linearGradient id="coin" x1="142" y1="148" x2="372" y2="364" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F7D67A"/>
+      <stop offset="1" stop-color="#D8912C"/>
+    </linearGradient>
+    <linearGradient id="line" x1="172" y1="314" x2="344" y2="206" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF6DE"/>
+      <stop offset="1" stop-color="#FFE2A4"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="120" fill="url(#bg)"/>
+  <circle cx="256" cy="256" r="138" fill="url(#coin)"/>
+  <circle cx="256" cy="256" r="120" stroke="#FFF3CF" stroke-width="6" opacity="0.55"/>
+  <path d="M188 318C204 289.333 224.667 263.667 250 241C274 219.667 299.333 202.333 326 189" stroke="url(#line)" stroke-width="20" stroke-linecap="round"/>
+  <circle cx="188" cy="318" r="18" fill="#FFF4D4"/>
+  <circle cx="252" cy="239" r="18" fill="#FFF4D4"/>
+  <circle cx="326" cy="190" r="18" fill="#FFF4D4"/>
+  <path d="M210 164H302" stroke="#FFF6DE" stroke-width="16" stroke-linecap="round" opacity="0.9"/>
+  <path d="M256 146V366" stroke="#FFF6DE" stroke-width="16" stroke-linecap="round" opacity="0.9"/>
+  <path d="M210 348C222.667 360 238 366 256 366C274 366 289.333 360 302 348" stroke="#FFF6DE" stroke-width="16" stroke-linecap="round" opacity="0.9"/>
+  <path d="M210 164C222.667 152 238 146 256 146C274 146 289.333 152 302 164" stroke="#FFF6DE" stroke-width="16" stroke-linecap="round" opacity="0.9"/>
+</svg>

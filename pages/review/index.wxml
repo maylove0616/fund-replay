@@ -1,0 +1,75 @@
+<view class="page">
+  <view class="hero">
+    <view class="hero-title">基金复盘</view>
+    <view class="hero-subtitle">把判断、失误和下一步动作写下来，避免每次都从情绪重新开始。</view>
+    <view class="status-bar">
+      <view class="status-pill">{{cloudStatus.enabled ? '云端复盘库' : '本地复盘库'}}</view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">{{editingId ? '编辑复盘' : '新增复盘'}}</view>
+    <view class="form-card">
+      <view class="field" wx:if="{{trackedFunds.length}}">
+        <text class="field-label">已持有基金</text>
+        <view class="chips">
+          <view class="chip" wx:for="{{trackedFunds}}" wx:key="name" data-name="{{item.name}}" bindtap="useTrackedFund">
+            {{item.label}}
+          </view>
+        </view>
+      </view>
+      <view class="field">
+        <text class="field-label">基金名称</text>
+        <input class="input" placeholder-class="input-placeholder" placeholder="例如：招商中证白酒" data-field="fundName" value="{{form.fundName}}" bindinput="handleInput" />
+      </view>
+      <view class="field">
+        <text class="field-label">复盘日期</text>
+        <input class="input" placeholder-class="input-placeholder" placeholder="YYYY-MM-DD" data-field="date" value="{{form.date}}" bindinput="handleInput" />
+      </view>
+      <view class="field">
+        <text class="field-label">本次结论</text>
+        <textarea class="textarea" placeholder-class="textarea-placeholder" placeholder="市场怎么看、持仓怎么看、为什么继续持有或减仓" data-field="summary" value="{{form.summary}}" bindinput="handleInput"></textarea>
+      </view>
+      <view class="field">
+        <text class="field-label">失误/偏差</text>
+        <textarea class="textarea" placeholder-class="textarea-placeholder" placeholder="例如：追涨、仓位过重、没有按计划执行" data-field="mistake" value="{{form.mistake}}" bindinput="handleInput"></textarea>
+      </view>
+      <view class="field">
+        <text class="field-label">下一步动作</text>
+        <textarea class="textarea" placeholder-class="textarea-placeholder" placeholder="例如：下周定投、观察估值、跌破某区间再处理" data-field="nextAction" value="{{form.nextAction}}" bindinput="handleInput"></textarea>
+      </view>
+      <button class="button" bindtap="submitReview">{{submitLabel}}</button>
+      <button class="button button-secondary" wx:if="{{editingId}}" bindtap="resetForm">取消编辑</button>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">历史复盘</view>
+    <block wx:if="{{reviews.length}}">
+      <view class="card" wx:for="{{reviews}}" wx:key="id">
+        <view class="row">
+          <view class="strong">{{item.fundName}}</view>
+          <view class="muted">{{item.date}}</view>
+        </view>
+        <view class="muted">关联持仓：{{item.fundName}}</view>
+        <view class="list-item">
+          <view class="muted">结论</view>
+          <view>{{item.summary}}</view>
+        </view>
+        <view class="list-item" wx:if="{{item.mistake}}">
+          <view class="muted">失误/偏差</view>
+          <view>{{item.mistake}}</view>
+        </view>
+        <view class="list-item">
+          <view class="muted">下一步动作</view>
+          <view>{{item.nextAction}}</view>
+        </view>
+        <view class="actions">
+          <view class="action-link" data-id="{{item.id}}" bindtap="startEdit">编辑</view>
+          <view class="action-link danger" data-id="{{item.id}}" bindtap="deleteReview">删除</view>
+        </view>
+      </view>
+    </block>
+    <view class="empty" wx:else>暂无复盘记录。</view>
+  </view>
+</view>

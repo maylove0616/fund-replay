@@ -1,0 +1,20 @@
+.card {
+  margin-bottom: 20rpx;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 28rpx;
+  margin-top: 22rpx;
+}
+
+.action-link {
+  color: #8b5c3d;
+  font-size: 24rpx;
+  font-weight: 600;
+}
+
+.danger {
+  color: #b65128;
+}

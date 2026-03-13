@@ -1,0 +1,103 @@
+<view class="page">
+  <view class="hero">
+    <view class="hero-title">基金复盘助手</view>
+    <view class="hero-subtitle">记录持仓、更新市值、沉淀每次交易和判断背后的复盘结论。</view>
+    <view class="status-bar">
+      <view class="status-pill">{{cloudStatus.enabled ? '云开发已启用' : '本地模式'}}</view>
+      <view class="status-pill" wx:if="{{cloudStatus.message}}">{{cloudStatus.message}}</view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">资产总览</view>
+    <view class="grid">
+      <view class="card">
+        <view class="stat-label">总成本</view>
+        <view class="stat-value">¥{{stats.totalCost}}</view>
+      </view>
+      <view class="card">
+        <view class="stat-label">当前市值</view>
+        <view class="stat-value">¥{{stats.totalMarketValue}}</view>
+      </view>
+      <view class="card">
+        <view class="stat-label">浮动盈亏</view>
+        <view class="stat-value {{stats.floatingPnLClass}}">¥{{stats.floatingPnL}}</view>
+      </view>
+      <view class="card">
+        <view class="stat-label">记录数量</view>
+        <view class="stat-value">{{stats.assetCount}} / {{stats.reviewCount}}</view>
+        <view class="muted">资产 / 复盘</view>
+      </view>
+      <view class="card">
+        <view class="stat-label">收益率</view>
+        <view class="stat-value {{stats.floatingPnLClass}}">{{stats.assetPnLRate}}</view>
+      </view>
+      <view class="card">
+        <view class="stat-label">盈利持仓</view>
+        <view class="stat-value">{{stats.profitableGroupCount}} / {{stats.groupCount}}</view>
+        <view class="muted">盈利基金 / 总基金</view>
+      </view>
+      <view class="card">
+        <view class="stat-label">复盘覆盖率</view>
+        <view class="stat-value">{{stats.reviewCoverageRate}}</view>
+        <view class="muted">已复盘基金占比</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">基金持仓看板</view>
+    <block wx:if="{{stats.topGroups.length}}">
+      <view class="card" wx:for="{{stats.topGroups}}" wx:key="key">
+        <view class="row">
+          <view class="strong">{{item.name}}</view>
+          <view class="{{item.pnlClass}}">¥{{item.pnl}}</view>
+        </view>
+        <view class="muted">{{item.code || '未填代码'}} · {{item.positions}} 条记录 · 最新 {{item.latestDate}}</view>
+        <view class="row" style="margin-top: 16rpx;">
+          <view>成本 ¥{{item.totalCost}}</view>
+          <view>市值 ¥{{item.totalMarketValue}}</view>
+        </view>
+      </view>
+    </block>
+    <view class="empty" wx:else>先新增资产记录，这里会自动生成基金持仓看板。</view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">最近资产更新</view>
+    <block wx:if="{{stats.recentAssets.length}}">
+      <view class="card" wx:for="{{stats.recentAssets}}" wx:key="id">
+        <view class="row">
+          <view class="strong">{{item.name}}</view>
+          <view class="{{item.pnlClass}}">¥{{item.pnl}}</view>
+        </view>
+        <view class="muted">成本 ¥{{item.cost}} · 市值 ¥{{item.marketValue}} · {{item.date}}</view>
+        <view class="chips" wx:if="{{item.tags && item.tags.length}}">
+          <view class="chip" wx:for="{{item.tags}}" wx:key="*this">{{item}}</view>
+        </view>
+      </view>
+    </block>
+    <view class="empty" wx:else>还没有资产记录，先去“资产”页新增一条。</view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">最近一次复盘</view>
+    <block wx:if="{{stats.latestReview}}">
+      <view class="card">
+        <view class="row">
+          <view class="strong">{{stats.latestReview.fundName}}</view>
+          <view class="muted">{{stats.latestReview.date}}</view>
+        </view>
+        <view class="list-item">
+          <view class="muted">策略结论</view>
+          <view>{{stats.latestReview.summary}}</view>
+        </view>
+        <view class="list-item">
+          <view class="muted">后续动作</view>
+          <view>{{stats.latestReview.nextAction}}</view>
+        </view>
+      </view>
+    </block>
+    <view class="empty" wx:else>还没有复盘记录，先去“复盘”页补第一篇。</view>
+  </view>
+</view>
